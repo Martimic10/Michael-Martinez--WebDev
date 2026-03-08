@@ -19,7 +19,7 @@ const projects = [
   },
   {
     id: 2,
-    title: "Restaurant Demo",
+    title: "Ember & Olive",
     description:
       "A stylish restaurant website concept focused on visual presentation, menu flow, and modern branding.",
     tags: ["Next.js", "TailwindCSS", "Responsive Design"],
@@ -29,8 +29,8 @@ const projects = [
     accentBorder: "rgba(244,63,94,0.2)",
     label: "Food & Dining",
     num: "02",
-    image: null,
-    demoUrl: null,
+    image: "/Ember&Olive.png",
+    demoUrl: "https://ember-olive-site.vercel.app",
   },
   {
     id: 3,

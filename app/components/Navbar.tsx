@@ -35,7 +35,7 @@ export default function Navbar() {
             M
           </div>
           <span className="text-sm font-semibold text-white/70 group-hover:text-white/90 transition-colors tracking-wide">
-            Michael Martinez
+            MM Designs
           </span>
         </a>
 

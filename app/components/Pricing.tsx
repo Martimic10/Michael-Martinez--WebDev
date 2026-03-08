@@ -31,11 +31,11 @@ export default function Pricing() {
           {/* Left — price & description */}
           <div>
             <div className="flex items-baseline gap-3 mb-4">
-              <span className="text-5xl sm:text-6xl font-bold text-white tracking-tight">$650</span>
+              <span className="text-5xl sm:text-6xl font-bold text-white tracking-tight">$750</span>
               <span className="text-lg text-white/30 font-medium">starting</span>
             </div>
             <p className="text-white/45 text-sm leading-relaxed mb-8 max-w-sm">
-              Business websites starting at $650. Final pricing depends on the
+              Business websites starting at $750. Final pricing depends on the
               number of pages, design complexity, and custom features needed.
             </p>
 

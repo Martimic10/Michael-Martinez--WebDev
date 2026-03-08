@@ -24,7 +24,7 @@ export default function Footer() {
               <div className="w-6 h-6 rounded-lg bg-indigo-600 flex items-center justify-center text-white text-xs font-bold">
                 M
               </div>
-              <span className="text-sm font-semibold text-white/60">Michael Martinez</span>
+              <span className="text-sm font-semibold text-white/60">MM Designs</span>
             </div>
             <p className="text-xs text-white/25 max-w-xs leading-relaxed">
               Freelance web developer building modern, premium websites for businesses.
