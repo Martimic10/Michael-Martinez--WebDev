@@ -34,9 +34,9 @@ const projects = [
   },
   {
     id: 3,
-    title: "Professional Services",
+    title: "BrightPath Dental",
     description:
-      "A polished service-business website concept designed for trust, clarity, and conversion.",
+      "A polished dental practice website concept designed for trust, clarity, and patient conversion.",
     tags: ["Next.js", "TailwindCSS", "Responsive Design"],
     icon: Briefcase,
     accent: "#818cf8",
@@ -44,8 +44,8 @@ const projects = [
     accentBorder: "rgba(129,140,248,0.2)",
     label: "Professional Services",
     num: "03",
-    image: null,
-    demoUrl: null,
+    image: "/BrightPath-Dental.png",
+    demoUrl: "https://bright-path-dental.vercel.app/",
   },
 ];
 
