@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { ExternalLink, Hammer, UtensilsCrossed, Briefcase } from "lucide-react";
+import Link from "next/link";
+import { ExternalLink, Hammer, UtensilsCrossed, Briefcase, ArrowRight } from "lucide-react";
 
 const projects = [
   {
@@ -64,9 +65,18 @@ export default function FeaturedWork() {
               Website Demos
             </h2>
           </div>
-          <p className="text-sm text-white/35 max-w-xs leading-relaxed sm:text-right">
-            Real-world demos showing what a modern, professional business website can look like.
-          </p>
+          <div className="flex flex-col sm:items-end gap-3">
+            <p className="text-sm text-white/35 max-w-xs leading-relaxed sm:text-right">
+              Real-world demos showing what a modern, professional business website can look like.
+            </p>
+            <Link
+              href="/work"
+              className="inline-flex items-center gap-1.5 text-sm text-indigo-400 hover:text-indigo-300 transition-colors font-medium"
+            >
+              View all work
+              <ArrowRight size={13} />
+            </Link>
+          </div>
         </div>
 
         {/* Stacked horizontal project cards */}

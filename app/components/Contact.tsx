@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, CheckCircle } from "lucide-react";
+import { ArrowRight, CheckCircle, Loader2, AlertCircle } from "lucide-react";
 
 export default function Contact() {
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -18,9 +19,29 @@ export default function Contact() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    setStatus("loading");
+    setErrorMsg("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Something went wrong.");
+      }
+
+      setStatus("success");
+    } catch (err) {
+      setErrorMsg(err instanceof Error ? err.message : "Something went wrong.");
+      setStatus("error");
+    }
   }
 
   return (
@@ -56,7 +77,7 @@ export default function Contact() {
 
           {/* Right — form */}
           <div>
-            {submitted ? (
+            {status === "success" ? (
               <div className="flex flex-col items-start py-10">
                 <div className="w-12 h-12 rounded-full bg-green-500/12 border border-green-500/20 flex items-center justify-center mb-5">
                   <CheckCircle size={22} className="text-green-400" />
@@ -78,7 +99,8 @@ export default function Contact() {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="John Smith"
-                      className="w-full px-4 py-3 rounded-xl bg-white/3 border border-white/8 text-white placeholder-white/20 text-base sm:text-sm focus:outline-none focus:border-indigo-500/40 focus:bg-white/5 transition-all duration-200"
+                      disabled={status === "loading"}
+                      className="w-full px-4 py-3 rounded-xl bg-white/3 border border-white/8 text-white placeholder-white/20 text-base sm:text-sm focus:outline-none focus:border-indigo-500/40 focus:bg-white/5 transition-all duration-200 disabled:opacity-50"
                     />
                   </div>
                   <div>
@@ -90,7 +112,8 @@ export default function Contact() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="you@company.com"
-                      className="w-full px-4 py-3 rounded-xl bg-white/3 border border-white/8 text-white placeholder-white/20 text-base sm:text-sm focus:outline-none focus:border-indigo-500/40 focus:bg-white/5 transition-all duration-200"
+                      disabled={status === "loading"}
+                      className="w-full px-4 py-3 rounded-xl bg-white/3 border border-white/8 text-white placeholder-white/20 text-base sm:text-sm focus:outline-none focus:border-indigo-500/40 focus:bg-white/5 transition-all duration-200 disabled:opacity-50"
                     />
                   </div>
                 </div>
@@ -103,7 +126,8 @@ export default function Contact() {
                     value={formData.business}
                     onChange={handleChange}
                     placeholder="Your Business Name"
-                    className="w-full px-4 py-3 rounded-xl bg-white/3 border border-white/8 text-white placeholder-white/20 text-base sm:text-sm focus:outline-none focus:border-indigo-500/40 focus:bg-white/5 transition-all duration-200"
+                    disabled={status === "loading"}
+                    className="w-full px-4 py-3 rounded-xl bg-white/3 border border-white/8 text-white placeholder-white/20 text-base sm:text-sm focus:outline-none focus:border-indigo-500/40 focus:bg-white/5 transition-all duration-200 disabled:opacity-50"
                   />
                 </div>
 
@@ -116,16 +140,35 @@ export default function Contact() {
                     onChange={handleChange}
                     rows={5}
                     placeholder="What kind of website do you need? Any specific features or goals?"
-                    className="w-full px-4 py-3 rounded-xl bg-white/3 border border-white/8 text-white placeholder-white/20 text-base sm:text-sm focus:outline-none focus:border-indigo-500/40 focus:bg-white/5 transition-all duration-200 resize-none"
+                    disabled={status === "loading"}
+                    className="w-full px-4 py-3 rounded-xl bg-white/3 border border-white/8 text-white placeholder-white/20 text-base sm:text-sm focus:outline-none focus:border-indigo-500/40 focus:bg-white/5 transition-all duration-200 resize-none disabled:opacity-50"
                   />
                 </div>
 
+                {/* Error message */}
+                {status === "error" && (
+                  <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-red-500/8 border border-red-500/20">
+                    <AlertCircle size={14} className="text-red-400 shrink-0" />
+                    <p className="text-xs text-red-400">{errorMsg}</p>
+                  </div>
+                )}
+
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-colors duration-200 shadow-lg shadow-indigo-600/20"
+                  disabled={status === "loading"}
+                  className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold text-sm transition-colors duration-200 shadow-lg shadow-indigo-600/20"
                 >
-                  Start a Project
-                  <ArrowRight size={14} />
+                  {status === "loading" ? (
+                    <>
+                      <Loader2 size={14} className="animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Start a Project
+                      <ArrowRight size={14} />
+                    </>
+                  )}
                 </button>
 
                 <p className="text-center text-xs text-white/20">I typically respond within 24 hours.</p>
